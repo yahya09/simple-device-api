@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Device;
+use App\Services\DeviceRepositoryService;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            DeviceRepositoryService::class,
+            function (Application $app) {
+                return new DeviceRepositoryService($app->make(Device::class));
+            });
     }
 
     /**
