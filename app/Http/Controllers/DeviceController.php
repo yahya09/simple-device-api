@@ -52,6 +52,10 @@ class DeviceController extends Controller
      */
     public function show(Device $device)
     {
+        if ($device->available_stock == 0) {
+            return Response::make(['error' => 'Device not found'], 404);
+        }
+        
         return $device;
     }
 
@@ -86,5 +90,16 @@ class DeviceController extends Controller
         } catch (\Exception $e) {
             return Response::make(['error' => $e->getMessage()], 400);
         }
+    }
+
+    public function preorderCustomers(?Device $device)
+    {
+        $this->authorize('viewPreorders', $device);
+
+        if ($device == null) {
+            return Response::make(['error' => 'Device not found'], 404);
+        }
+
+        return Response::json($this->deviceRepositoryService->getPreorderCustomers($device));
     }
 }

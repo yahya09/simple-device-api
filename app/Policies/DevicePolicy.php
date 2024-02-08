@@ -73,4 +73,9 @@ class DevicePolicy
     {
         return false;
     }
+
+    public function viewPreorders(?User $user, Device $device): bool
+    {
+        return false;
+    }
 }

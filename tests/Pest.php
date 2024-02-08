@@ -11,9 +11,12 @@
 |
 */
 
+use App\Models\User;
+use App\Models\UserRole;
+
 uses(
     Tests\TestCase::class,
-    // Illuminate\Foundation\Testing\RefreshDatabase::class,
+    Illuminate\Foundation\Testing\RefreshDatabase::class,
 )->in('Feature');
 
 /*
@@ -42,7 +45,9 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function getAdminUser()
 {
-    // ..
+    return User::factory()->create([
+        'role' => UserRole::Admin,
+    ]);
 }

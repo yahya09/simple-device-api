@@ -19,6 +19,13 @@ class Device extends Model
         'pre_ordered_count'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    protected $dateFormat = 'Y-m-d H:i:s';
+
     public function getAvailableStockAttribute()
     {
         return $this->stock - $this->pre_ordered_count;
@@ -27,5 +34,10 @@ class Device extends Model
     public function getHaveBeenPreorderedAttribute()
     {
         return $this->pre_ordered_count > 0;
+    }
+
+    public function preorders()
+    {
+        return $this->hasMany(Preorder::class);
     }
 }

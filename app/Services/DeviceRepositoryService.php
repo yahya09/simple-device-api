@@ -64,4 +64,11 @@ class DeviceRepositoryService
             throw new \Exception('Cannot delete device with pre-orders!');
         }
     }
+
+    public function getPreorderCustomers(Device $device)
+    {
+        $device->load('preorders.customer');
+
+        return $device->preorders->pluck('customer');
+    }
 }
